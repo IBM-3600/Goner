@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="client/css/loginpage.css">
+    <script type="text/javascript" src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <title>Goner Login</title>
+</head>
+
+    
+    <header><div><h2>Goner Online</h2></div></header>
+      <div class="loginBox">
+          <h3>Welcome to Goner</h3>
+        <!-- login -->
+        <form id="loginForm" action="/goner" method="post">
+             <div class="unit">
+                 <label for="name">Name</label>
+                 <input id="Name" name="Name" type="text" placeholder="john mark">
+             </div>
+             <div class="unit">
+                 <label for="name">UserName</label>
+                <input id="UserName" name="UserName" type="text" placeholder="john123">
+             </div>
+             <div class="unit">
+                 <label for="name">Email</label>
+                <input id="Email" name="Email" type="email" placeholder="john@gmail.com">
+             </div>
+             <div class="unit">
+                 <label for="name">Password</label>
+                <input id="Password" name="Password" type="password" placeholder="....">
+             </div>
+            <button id="submitButton" type="submit">Login</button>
+        </form>
+      </div>
+      <script src="client/js/loginpage.js"></script>
+</body>
+</html>

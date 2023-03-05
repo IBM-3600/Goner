@@ -26,7 +26,8 @@ renderer = new THREE.WebGLRenderer({
   canvas: ctx,
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+document.body.appendChild(renderer.domElement); //can be removed but important
+
 //controls = new OrbitControls(camera, renderer.domElement);
 
 //controls.update();

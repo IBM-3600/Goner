@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.floor{
+    width: auto;
+    height: auto;
+    z-index: 1;
+}
+#ctx{
+  z-index: 2;
+}
+.top_screen{
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background: transparent;
+ z-index: 2;
+}

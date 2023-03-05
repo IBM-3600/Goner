@@ -1,4 +1,5 @@
 var socket = io();
+const user_id = document.getElementById("userId");
 
 const Players = {};
 let List_of_connected = {};
@@ -14,6 +15,8 @@ let SelfId = null;
 
 socket.on("initPlayer", (data) => {
   SelfId = data.id;
+  user_id.innerHTML = "<h5>" + data.username + "</h5>";
+  console.log(user_id.text);
   Players[data.id] = data.id;
   console.log(`id${SelfId} `);
   //init player
@@ -41,6 +44,7 @@ const createPlayer = (id, x, y, z, check) => {
     //
     //create three.js mesh in scene
     const mesh = player.createPlayer();
+
     scene.add(mesh);
   } else {
     List_of_connected[id] = id;
