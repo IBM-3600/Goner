@@ -8,16 +8,27 @@ body{
    
 }
 header{
-    width: 100%;
+    width: auto;
 }
 header div{
-    width: 100%;
+    width: auto;
     height: 50px;
     /* background-color:red; */
     background-image: linear-gradient(to right,yellow ,blue ,black);
-    
+    background-size: 300%;
+     animation: mover;
+            animation-duration: 10s;
+            
+            animation-fill-mode:forwards;
+            animation-iteration-count: infinite;
+            animation-timing-function:ease-in;
+            animation-direction: alternate;
 }
-
+ @keyframes mover {
+        0%{background-position: right;}
+        100%{background-position: left;}
+        
+       }
 header div h2{
   position: relative;
   top: 10px;

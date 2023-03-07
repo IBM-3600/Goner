@@ -1,0 +1,74 @@
+ :root{
+            --grad: linear-gradient(45deg,
+            skyblue,
+            #f0b255dc ,
+            #b8fa79,
+            #f370ec);
+            --grad1: linear-gradient(45deg,skyblue,white,skyblue);
+             --grad2: linear-gradient(-45deg,blue,rgb(223, 215, 215),blue);
+             --grad3: linear-gradient(to right,yellow ,blue ,black);
+        }
+ *{
+    margin: 0px;
+    padding: 0px;
+    top: 0px;
+    left: 0px;
+} 
+ .headDesign{
+            margin: 0;
+            padding: 0;
+           display: flex;
+            width: auto;
+            height: 60px;
+            background-color:gray;
+            background-image: var(--grad3);
+            background-size: 300%;
+            /* background-position: left; */
+            animation: mover;
+            animation-duration: 10s;
+            
+            animation-fill-mode:forwards;
+            animation-iteration-count: infinite;
+            animation-timing-function:ease-in;
+            animation-direction: alternate;
+            
+            
+            
+        }
+       @keyframes mover {
+        0%{background-position: right;}
+        100%{background-position: left;}
+        
+       }
+  .goner{
+    padding: 5px;
+    width: 200px;
+    height: 50px;
+    position: relative; 
+    top: 10px;
+    left: 10px;
+ }       
+.goner h2{
+ 
+}
+       .login_container{
+        width: 80px;
+        height: 50px;
+        display: flex;
+        position: relative; 
+        padding-top: 10px;
+        left: 900px;
+       }
+       .login_container a{ 
+        text-decoration: none;
+        padding: 10px;
+        color: #fff;
+    }
+
+    @media (max-width: 720px) {
+        .login_container{
+            left: 90px;
+            padding-top: 10px;
+        }
+        
+    }
