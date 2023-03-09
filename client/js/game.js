@@ -1,3 +1,7 @@
+const Player = require("./Player");
+const THREE = require("three");
+const io = require("socket.io-client");
+require("./Init.js");
 var socket = io();
 const user_id = document.getElementById("userId");
 
