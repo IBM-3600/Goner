@@ -1,6 +1,4 @@
-var socket = io();
-const user_id = document.getElementById("userId");
-const mouse_pos = document.getElementById("mousePosDisplay");
+
 const Players = {};
 let List_of_connected = {};
 socket.on("handshake", () => {
@@ -91,7 +89,7 @@ socket.on("d_p", (data) => {
   }
 });
 const Animate = () => {
-  mouse_pos.innerHTML = "<p>X " + mouse_x + "Y" + mouse_y + "</p>";
+
   renderer.render(scene, camera);
   requestAnimationFrame(Animate);
 };
@@ -103,3 +101,4 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
