@@ -41,3 +41,5 @@ class Player {
     return { x: x, y: y, z: z };
   }
 }
+
+module.exports = Player;
