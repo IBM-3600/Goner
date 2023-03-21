@@ -1,4 +1,3 @@
-const { Socket } = require("dgram");
 const express = require("express");
 const app = express();
 const http = require("http");
@@ -26,6 +25,7 @@ app.get("/", (req, res) => {
 });
 const file2 = path.join(__dirname, "../client/goner.html");
 const loginFile = path.join(__dirname, "../client/html/loginpage.html");
+const adminFile = path.join(__dirname, "../client/html/admin.html");
 // app.get("/goner", (req, res) => {
 //   res.sendFile(file2);
 //   const { Name, UserName, Email, Password } = req.body;
@@ -37,14 +37,19 @@ app.get("/login", (req, res) => {
 });
 //post
 app.post("/goner", (req, res) => {
-  res.sendFile(file2);
   const { Name, UserName, Email, Password } = req.body;
   user.name = Name;
   user.username = UserName;
   user.email = Email;
   user.password = Password;
-
+  // add user to userList
   userList[Email] = user;
+  if (Name != "admin") {
+    res.sendFile(file2);
+  } else {
+    res.sendFile(adminFile);
+  }
+
   console.log(`${Name}||${UserName}||${Email}||${Password}`);
 });
 
@@ -55,19 +60,26 @@ serv.listen(3002);
 const SOCKET_LIST = {};
 //creating player list
 const PLAYER_LIST = {};
+//list environment event
+const env_event_list = new Map();
+const env_event_list_1 = {};
 let CurrentInputId = -1;
 let initOther = {};
 let newPlayerCount = 0;
 let oldPlayerCount = 0;
-
+var Debug = true;
 var io = new Server(serv, server_config);
 //SERVER
 io.sockets.on("connection", (socket) => {
   console.log("hand shake from server side...");
   //GEN socket id
   socket.id = user.email;
+  var player;
+  if (socket.id == "") {
+    socket.emit("return_to_login");
+  }
   //create PLAYER
-  const player = new Player(socket.id);
+  player = new Player(socket.id);
   //add to socket list
   console.log(`socket : ${socket.id} created`);
   for (var u in userList) {
@@ -86,6 +98,7 @@ io.sockets.on("connection", (socket) => {
     username: user.username,
   };
   newPlayerCount++;
+
   socket.emit("handshake");
   socket.emit("initPlayer", {
     id: socket.id,
@@ -94,14 +107,18 @@ io.sockets.on("connection", (socket) => {
     z: z,
     username: user.username,
   });
-
+  for (var [key, value] of env_event_list.entries()) {
+    socket.emit("c-scale-event", value);
+    io.emit("c-scale-event", value);
+  }
   socket.on("checkOthers", () => {
     if (newPlayerCount > 1) {
-      for (var i in SOCKET_LIST) {
-        const socket1 = SOCKET_LIST[i];
+      // for (var i in SOCKET_LIST) {
+      // const socket1 = SOCKET_LIST[i];
 
-        socket1.emit("otherPlayer", initOther);
-      }
+      io.emit("otherPlayer", initOther);
+
+      //}
     }
   });
   socket.on("keypress", (data) => {
@@ -120,7 +137,37 @@ io.sockets.on("connection", (socket) => {
       player.input.pressBackward = data.status;
     }
   });
+  //----manip--- events
 
+  socket.on("s-scale-event", (data) => {
+    io.emit("c-scale-event", data);
+    env_event_list.set(data.name, data);
+
+    console.log("sent scale event");
+  });
+  //----------Chat events-------
+  // "send-msg-ts" => sending message to server
+  // "send-msg-tc" => sending message to client
+  // "send-msg-tcs" => sending message to clients
+  socket.on("send-msg-ts", (data) => {
+    if (data.receiver != "") {
+      console.log("send msg to -- client");
+    } else {
+      io.except(data.sender).emit("send-msg-tcs", {
+        name: data.name,
+        msg: data.msg,
+      });
+    }
+  });
+  //------------- Eval command----
+  socket.on("eval_command", (data) => {
+    console.log(data.msg);
+    if (!Debug) return;
+
+    var res = eval(data.msg);
+    socket.emit("server_res", res);
+  });
+  //-------------------
   socket.on("disconnect", () => {
     newPlayerCount--;
     for (var i in SOCKET_LIST) {
@@ -149,10 +196,6 @@ setInterval(() => {
     });
   }
 
-  for (var s in SOCKET_LIST) {
-    var socket = SOCKET_LIST[s];
-    socket.emit("updatePosition", movePack);
-  }
-
+  io.emit("updatePosition", movePack);
   movePack = [];
 }, 1000 / 32);

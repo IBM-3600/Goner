@@ -4,7 +4,7 @@
   "description": "",
   "main": "Init.js",
   "scripts": {
-    "start":"node_modules/.bin/webpack",
+    "start":"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

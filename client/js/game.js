@@ -1,6 +1,43 @@
+const {
+  THREE,
+  renderer,
+  camera,
+  camera1,
+  scene,
+  raycast,
+  Player,
+  initStateOf_object,
+  old_size,
+  new_size,
+} = require("./Init.js");
+//require("./modelLoader");
+require("./extra/environment.js");
+
+const { socket } = require("./socket_init.js");
+const pointer = new THREE.Vector2();
+var cam_switch = false;
+var cam = cam_switch ? camera : camera1;
+const switchBtn = document.getElementById("switch_cam");
+
+const user_id = document.getElementById("userId");
+const mouse_pos = document.getElementById("mousePosDisplay");
 
 const Players = {};
 let List_of_connected = {};
+const scam = () => {
+  cam_switch = cam_switch ? false : true;
+  cam = cam_switch ? camera : camera1;
+  console.log(`${cam_switch}`);
+  console.log("switch btn click");
+};
+switchBtn.onclick = scam;
+socket.on("return_to_login", () => {
+  //go back to login page
+  document.location.replace("http://localhost:3002/login");
+
+  console.log("return to login Page");
+});
+
 socket.on("handshake", () => {
   console.log("hand shake from client side..");
   if (Players)
@@ -18,7 +55,7 @@ socket.on("initPlayer", (data) => {
   Players[data.id] = data.id;
   console.log(`id${SelfId} `);
   //init player
-  createPlayer(data.id, data.x, data.y, data.z, true);
+  createPlayer(data.id, data.x, data.y, data.z, data.username, true);
   socket.emit("checkOthers");
 });
 socket.on("otherPlayer", (data) => {
@@ -31,7 +68,7 @@ socket.on("otherPlayer", (data) => {
     }
   }
 });
-const createPlayer = (id, x, y, z, check) => {
+const createPlayer = (id, x, y, z, name, check) => {
   if (check) {
     List_of_connected[id] = id;
     const player = new Player(id);
@@ -40,7 +77,7 @@ const createPlayer = (id, x, y, z, check) => {
     Players[id] = player;
     player.setPosition(x, y, z);
     //
-    //create three.js mesh in scene
+
     const mesh = player.createPlayer();
 
     scene.add(mesh);
@@ -48,10 +85,8 @@ const createPlayer = (id, x, y, z, check) => {
     List_of_connected[id] = id;
     const player = new Player(id);
 
-    //add player to players list
     player.setPosition(x, y, z);
 
-    //create three.js mesh in scene
     const mesh1 = scene.children.find(
       (child) => child instanceof THREE.Mesh && child.name === id
     );
@@ -59,14 +94,15 @@ const createPlayer = (id, x, y, z, check) => {
       Players[id] = player;
       console.log("creating other player" + id);
       const mesh = player.createPlayer();
+
       scene.add(mesh);
     }
   }
 };
 socket.on("updatePosition", (data) => {
-  update(data);
+  updatePos(data);
 });
-const update = (param = []) => {
+const updatePos = (param = []) => {
   for (var i = 0; i <= param.length; i++) {
     const id = param[i];
 
@@ -85,20 +121,59 @@ socket.on("d_p", (data) => {
   if (player) {
     scene.remove(player.mesh);
     delete Players[data];
+    delete List_of_connected[data];
     console.log("removed player" + data);
   }
 });
-const Animate = () => {
+var click = false;
 
-  renderer.render(scene, camera);
-  requestAnimationFrame(Animate);
+const update = () => {
+  raycast.setFromCamera(pointer, camera);
+  const intersect = raycast.intersectObjects(scene.children);
+  for (let i = 0; i < intersect.length; i++) {
+    if (intersect[i].object) {
+      if (click) {
+        socket.emit("s-scale-event", {
+          name: intersect[i].object.name,
+          ratio: { x: 2, y: 2, z: 2 },
+        });
+        click = false;
+      }
+      // intersect[i].object.scale.set(2, 2, 2);
+    }
+  }
+};
+const Animate = () => {
+  update();
+  window.requestAnimationFrame(Animate);
+  mouse_pos.innerHTML = "<p>x" + mouse_x + "y" + mouse_y + "</p>";
+  renderer.render(scene, cam);
 };
 Animate();
 
 //Resize window
 window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+  cam.aspect = window.innerWidth / window.innerHeight;
+  cam.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+//mouse related logic
+
+var mouse_x;
+var mouse_y;
+
+document.addEventListener("mousemove", (e) => {
+  mouse_x = e.clientX;
+  mouse_y = e.clientY;
+});
+
+document.addEventListener("mousedown", (e) => {
+  pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  click = true;
+});
+const { getId, getCamera1 } = require("./Input.js");
+getId(SelfId);
+getCamera1(camera1);
+require("./extra/event.js");

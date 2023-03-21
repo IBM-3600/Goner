@@ -1,3 +1,4 @@
+const THREE = require("three");
 class Player {
   constructor(id) {
     this.id = id;
@@ -10,7 +11,7 @@ class Player {
   }
 
   createPlayer() {
-    let geometry = new THREE.BoxGeometry();
+    let geometry = new THREE.BoxGeometry(1, 1, 1);
     let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.name = this.id;

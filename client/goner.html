@@ -1,39 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<!DOCTYPE html> 
+ <html lang="en"> 
+ <head>
+     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="client/css/goner.css">
-     <script type="text/javascript" src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-     <script type="module" src="https://unpkg.com/three-orbitcontrols@2.110.3/OrbitControls.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="client/css/goner.css"> 
+     <!-- <script type="text/javascript" src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script> -->
+     <!-- <script type="module" src="https://unpkg.com/three-orbitcontrols@2.110.3/OrbitControls.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
    
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script> -->
     <!-- <script type="text/javascript" 
     src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r117/examples/js/loaders/FBXLoader.js"></script> -->
-    <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script type="text/javascript" src="client/js/Input.js"></script>
+    <!-- <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script> -->
+     <!-- <script type="text/javascript" src="client/js/Input.js"></script>  -->
     <title>Goner</title>
 </head>
 <body>
-
-    <div class="floor">
+  
+     <div class="floor"> 
         
-        <canvas id="ctx"></canvas>
         <div class="top_screen">
-           <div id="userId" >
+            
+                    <div id="userId" ></div>
+                    <div id="mousePosDisplay"></div>
+                    <button id="switch_cam">Switch cam</button>
+                    <div class="view-control">
+                        <button id="view_btn">Chat >></button>
+                    </div> 
+                        <div id="chat">
+
+                             <ul class="chat-message-box"></ul> 
+
+                                <div class="chat-input-box"> 
+                                            <form id="chat-form" > 
+                                            
+                                                                    <!-- <input name="input" 
+                                                                    placeholder="write text" 
+                                                                    type="text" 
+                                                                    id="chat-input-field"
+                                                                    value=""
+                                                                    >   -->
+
+                                                <textarea name="" 
+                                                placeholder="chat content" 
+                                                id="chat-input-field" 
+                                                role="textbox" rows="20" 
+                                                cols="20"></textarea> 
+
+                                                <button id="submit-btn" type="submit">Send</button> 
+                                            </form> 
+                                </div>
+                        </div>  
               
-           </div>
-           <div id="mousePosDisplay"></div>
+            
+             <script src="client/dist/chat.bundle.js"></script>
+                
+                     <canvas id="ctx"></canvas>
+          
+           
         </div>
         <!-- <script type="text/javascript" src="client/Init.js"></script>
         <script type="text/javascript" src="client/js/modelLoader.js"></script>
         <script type="text/javascript" src="client/js/Player.js" ></script> -->
-
+       <script type="text/javascript" src="client/dist/game.bundle.js"></script>
+       
+        <!-- <script type="text/javascript" src="client/js/Input.js"></script>  -->
     </div>
 
-   
+    
 </body>
-</html>
+</html> 

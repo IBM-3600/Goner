@@ -8,15 +8,97 @@
 .floor{
     width: auto;
     height: auto;
-    z-index: 1;
+    z-index: -1;
 }
 #ctx{
-  z-index: 2;
+   
+  width: 400px;
+  height: 400px;
+  border: 2px solid black;
+  z-index: 1;
 }
 .top_screen{
     top: 0px;
     left: 0px;
     position: absolute;
-    background: transparent;
- z-index: 2;
+    background:transparent;
+    z-index: 2;
+}
+#mousePosDisplay{}
+    
+#switch_cam{
+   
+}
+
+.view-control{}
+#chat{ 
+    position: relative;
+    width: 250px;
+    height: auto;
+    top: 10px;
+    left: -300px;
+    /* height: 390px; */
+    min-width: 100px;
+    min-height:50px;
+    max-width:330px;
+    max-height: 550px;
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 5px;
+    transition: left;
+    /* transition-delay: .5s; */
+    transition-duration: .2s;
+    transition-timing-function: ease-in;
+}
+.chat-message-box{
+    margin-top: 5px;
+    margin-left: 10px;
+    width: 230px;
+    height: 350px;
+    background-color: aliceblue;
+    /* z-index: 2; */
+}
+.chat-input-box{
+    width: 225px;
+    height: 60px;
+    max-height: 90px;
+    margin-top: 5px;
+    margin-left: 3px;
+    margin-bottom: 5px;
+}
+.chat-input-box button{
+    float: right;
+}
+.chat-form{}
+#chat-input-field{
+    
+    width: 210px;
+    height: 20px;
+    max-height: 80px;
+    z-index: 2;
+    
+} 
+
+@media (max-width: 760px){
+ #chat{ 
+    width: 200px;
+    height: 350px;
+    }
+    .chat-message-box{
+    width: 180px;
+    height: 270px;
+    }
+    #chat-input-field{
+        width: 170px;
+    }
+    .chat-input-box{
+         width: 180px;
+    }
+}
+@media (max-height: 300px){
+ #chat{ 
+    width: 170px;
+    height: 150px;
+    }
+    .chat-message-box{}
 }
