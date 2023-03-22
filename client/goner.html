@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
  <html lang="en"> 
  <head>
-     <meta charset="UTF-8">
+     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" href="client/css/goner.css"> 
@@ -18,9 +18,12 @@
     <title>Goner</title>
 </head>
 <body>
-  
+   <script src="/socket.io/socket.io.js"></script>
+   <script type="text/javascript">
+      socket = io();
+   </script>
      <div class="floor"> 
-        
+         <canvas id="ctx"></canvas>
         <div class="top_screen">
             
                     <div id="userId" ></div>
@@ -45,7 +48,7 @@
 
                                                 <textarea name="" 
                                                 placeholder="chat content" 
-                                                id="chat-input-field" 
+                                                id="chat-input-field"
                                                 role="textbox" rows="20" 
                                                 cols="20"></textarea> 
 
@@ -55,9 +58,9 @@
                         </div>  
               
             
-             <script src="client/dist/chat.bundle.js"></script>
+            
                 
-                     <canvas id="ctx"></canvas>
+                    
           
            
         </div>

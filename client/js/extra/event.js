@@ -1,4 +1,3 @@
-const { socket } = require("./../socket_init.js");
 const {
   scene,
   THREE,

@@ -13,7 +13,6 @@ const {
 //require("./modelLoader");
 require("./extra/environment.js");
 
-const { socket } = require("./socket_init.js");
 const pointer = new THREE.Vector2();
 var cam_switch = false;
 var cam = cam_switch ? camera : camera1;
@@ -149,6 +148,7 @@ const Animate = () => {
   mouse_pos.innerHTML = "<p>x" + mouse_x + "y" + mouse_y + "</p>";
   renderer.render(scene, cam);
 };
+
 Animate();
 
 //Resize window
@@ -166,14 +166,17 @@ var mouse_y;
 document.addEventListener("mousemove", (e) => {
   mouse_x = e.clientX;
   mouse_y = e.clientY;
+  document.removeEventListener("mousemove", this);
 });
 
 document.addEventListener("mousedown", (e) => {
   pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
   click = true;
+  document.removeEventListener("mousedown", this);
 });
 const { getId, getCamera1 } = require("./Input.js");
 getId(SelfId);
 getCamera1(camera1);
 require("./extra/event.js");
+require("./chat.js");

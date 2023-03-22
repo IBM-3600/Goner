@@ -1,4 +1,3 @@
-const { socket } = require("./socket_init");
 var SelfId;
 export function getId(id) {
   SelfId = id;
@@ -57,15 +56,16 @@ var input = { x: 0, y: 0, z: 0 };
 document.addEventListener("keydown", (event) => {
   var sp = 10;
 
-  if (event.key == "left arrow") input.x = input.x + sp;
+  if (event.key == "ArrowLeft") input.x = input.x + sp;
 
-  if (event.key == "up arrow") input.y -= input.y - sp;
+  if (event.key == "ArrowUp") input.y -= input.y - sp;
 
-  if (event.key == "right arrow") input.x -= input.x - sp;
+  if (event.key == "ArrowRight") input.x -= input.x - sp;
 
-  if (event.key == "down arrow") input.y = input.y + sp;
+  if (event.key == "ArrowDown") input.y = input.y + sp;
 
   camera1.position.set(input.x, input.y);
   //camera1.position.y = input.y;
   // socket.emit("player-input", input);
+  removeEventListener("keydown", this);
 });

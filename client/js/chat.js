@@ -1,4 +1,3 @@
-import { socket } from "./socket_init";
 const { keys, key_set } = require("./keys_constant.js");
 let btn = document.getElementById("view_btn");
 var chat = document.getElementById("chat");
@@ -80,6 +79,7 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
+document.removeEventListener("keydown", this);
 form.onsubmit = (e) => {
   e.preventDefault();
   if (message != "") {

@@ -4,7 +4,7 @@ module.exports = {
   context: path.join(__dirname, "js"),
   entry: {
     game: "./game.js",
-    chat: "./chat.js",
+    // chat: "./chat.js",
   },
   output: {
     path: path.join(__dirname, "dist"),

@@ -67,6 +67,7 @@ let CurrentInputId = -1;
 let initOther = {};
 let newPlayerCount = 0;
 let oldPlayerCount = 0;
+//DEBUG opt
 var Debug = true;
 var io = new Server(serv, server_config);
 //SERVER
